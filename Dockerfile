@@ -7,7 +7,10 @@ COPY . .
 #Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage
 RUN composer install --optimize-autoloader --no-dev
+RUN php artisan passport:install
 RUN php artisan key:generate
+RUN php artisan migrate
+RUN php artisan db:seed
 RUN mv .env.example .env
 RUN php artisan optimize
 # Expose port
